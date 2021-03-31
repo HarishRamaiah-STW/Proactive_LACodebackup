@@ -1,0 +1,349 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "sql_1_Connection_Name": {
+      "type": "string",
+      "defaultValue": "sql-1"
+    },
+    "sql_1_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "st-proactivemetering-test-sqldb st-proactivemetering-test-neu-sqlserver.database.windows.net"
+    },
+    "sql_1_server": {
+      "type": "string",
+      "metadata": {
+        "description": "SQL server name"
+      }
+    },
+    "sql_1_database": {
+      "type": "string",
+      "metadata": {
+        "description": "SQL database name"
+      }
+    },
+    "sql_1_username": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Username credential"
+      }
+    },
+    "sql_1_password": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password credential"
+      }
+    },
+    "sql_1_encryptConnection": {
+      "type": "bool",
+      "metadata": {
+        "description": "Encrypt Connection"
+      }
+    },
+    "sql_1_privacySetting": {
+      "type": "string",
+      "metadata": {
+        "description": "Privacy Setting"
+      },
+      "allowedValues": [
+        "None",
+        "Private",
+        "Organizational",
+        "Public"
+      ]
+    },
+    "sql_1_sqlConnectionString": {
+      "type": "securestring",
+      "metadata": {
+        "description": "SQL Connection String"
+      }
+    },
+    "st-proactivemetering-logicapp-Test-custconnector3_1_Connection_Name": {
+      "type": "string",
+      "defaultValue": "st-proactivemetering-logicapp-Test-custconnector3-3"
+    },
+    "st-proactivemetering-logicapp-Test-custconnector3_1_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "st-proactivemeterig-gateway"
+    },
+    "st-proactivemetering-logicapp-Test-custconnector3_1_authType": {
+      "type": "string",
+      "metadata": {
+        "description": "Authentication type to connect to your API"
+      },
+      "defaultValue": "anonymous",
+      "allowedValues": [
+        "none"
+      ]
+    },
+    "st-proactivemetering-logicapp-Test-custconnector3_1_gateway_id": {
+      "type": "string",
+      "defaultValue": "/subscriptions/39145e23-d044-41c8-a83d-4bab22cc8f5d/resourceGroups/st-proactivemetering-dev-neu-rg/providers/Microsoft.Web/connectionGateways/st-proactivemetering-neu-datagw"
+    },
+    "LogicAppLocation": {
+      "type": "string",
+      "minLength": 1,
+      "allowedValues": [
+        "[resourceGroup().location]",
+        "eastasia",
+        "southeastasia",
+        "centralus",
+        "eastus",
+        "eastus2",
+        "westus",
+        "northcentralus",
+        "southcentralus",
+        "northeurope",
+        "westeurope",
+        "japanwest",
+        "japaneast",
+        "brazilsouth",
+        "australiaeast",
+        "australiasoutheast",
+        "southindia",
+        "centralindia",
+        "westindia",
+        "canadacentral",
+        "canadaeast",
+        "uksouth",
+        "ukwest",
+        "westcentralus",
+        "westus2",
+        "koreacentral",
+        "koreasouth",
+        "francecentral",
+        "francesouth",
+        "uaecentral",
+        "uaenorth",
+        "southafricanorth",
+        "southafricawest",
+        "switzerlandnorth",
+        "switzerlandwest",
+        "germanynorth",
+        "germanywestcentral",
+        "norwayeast",
+        "brazilsoutheast"
+      ],
+      "defaultValue": "northeurope"
+    },
+    "LogicAppName": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "st-proactivemetering-test-neu-la-7"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "actions": {
+            "Close_Special_condition_in_Target": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['sql']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "body": {
+                  "query": "SELECT T.* , C.PropertyID from [dbo].[TRACK_JOB_PROGRESS] T Join JOB_CREATED C\non C.OrderNumber=Replace(Ltrim(Replace(T.OrderNumber, '0', ' ')), ' ', '0')\nwhere T.Operation ='MPIBD'\nand c.FunctionalLocation=t.FunctionalLocation\nand  CAST(DBInsertionDate AS DATE) = CAST(GETDATE()  AS DATE)"
+                },
+                "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/query/sql"
+              },
+              "runAfter": {
+                "Initialize_variable": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "For_each": {
+              "type": "Foreach",
+              "foreach": "@body('Close_Special_condition_in_Target')?['resultsets']?['Table1']",
+              "actions": {
+                "Condition": {
+                  "type": "If",
+                  "expression": {
+                    "or": [
+                      {
+                        "or": [
+                          {
+                            "equals": [
+                              "@items('For_each')?['Operation_Status']",
+                              "SUNR"
+                            ]
+                          },
+                          {
+                            "equals": [
+                              "@items('For_each')?['Operation_Status']",
+                              "RJTD"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "and": [
+                          {
+                            "equals": [
+                              "@items('For_each')?['Operation_Status']",
+                              "COMP"
+                            ]
+                          },
+                          {
+                            "equals": [
+                              "@items('For_each')?['Closing_action_code']",
+                              "PIAB"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "actions": {
+                    "KarafSpecialConditionLogicAppTestConnectors": {
+                      "type": "ApiConnection",
+                      "inputs": {
+                        "host": {
+                          "connection": {
+                            "name": "@parameters('$connections')['st-proactivemetering-logicapp-Test-custconnector3_1']['connectionId']"
+                          }
+                        },
+                        "method": "post",
+                        "headers": {
+                          "x-endpoint-shared-secret": "08697fcb-27fc-4182-a974-394ba955bdd7"
+                        },
+                        "path": "/cxf/specialconditions/property/end",
+                        "queries": {
+                          "specialCondition": "01PROMETER",
+                          "propertyNumber": "@items('For_each')?['PropertyID']"
+                        }
+                      },
+                      "runAfter": {}
+                    }
+                  },
+                  "runAfter": {},
+                  "else": {
+                    "actions": {
+                      "Set_variable": {
+                        "type": "SetVariable",
+                        "inputs": {
+                          "name": "Property",
+                          "value": 1
+                        },
+                        "runAfter": {}
+                      }
+                    }
+                  }
+                }
+              },
+              "runAfter": {
+                "Close_Special_condition_in_Target": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Initialize_variable": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "Property",
+                    "type": "integer"
+                  }
+                ]
+              },
+              "runAfter": {}
+            }
+          },
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            }
+          },
+          "triggers": {
+            "Recurrence": {
+              "type": "Recurrence",
+              "recurrence": {
+                "frequency": "Month",
+                "interval": 1
+              }
+            }
+          },
+          "contentVersion": "1.0.0.0",
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "sql": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'sql')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('sql_1_Connection_Name'))]",
+                "connectionName": "[parameters('sql_1_Connection_Name')]"
+              },
+              "st-proactivemetering-logicapp-Test-custconnector3_1": {
+                "id": "[resourceId('Microsoft.Web/customApis', 'st-proactivemetering-logicapp-Test-custconnector3')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('st-proactivemetering-logicapp-Test-custconnector3_1_Connection_Name'))]",
+                "connectionName": "[parameters('st-proactivemetering-logicapp-Test-custconnector3_1_Connection_Name')]"
+              }
+            }
+          }
+        }
+      },
+      "name": "[parameters('LogicAppName')]",
+      "type": "Microsoft.Logic/workflows",
+      "location": "[parameters('LogicAppLocation')]",
+      "tags": {
+        "displayName": "LogicApp"
+      },
+      "apiVersion": "2016-06-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('sql_1_Connection_Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('st-proactivemetering-logicapp-Test-custconnector3_1_Connection_Name'))]"
+      ]
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('sql_1_Connection_Name')]",
+      "location": "northeurope",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'sql')]"
+        },
+        "displayName": "[parameters('sql_1_Connection_DisplayName')]",
+        "parameterValues": {
+          "server": "[parameters('sql_1_server')]",
+          "database": "[parameters('sql_1_database')]",
+          "username": "[parameters('sql_1_username')]",
+          "password": "[parameters('sql_1_password')]",
+          "encryptConnection": "[parameters('sql_1_encryptConnection')]",
+          "privacySetting": "[parameters('sql_1_privacySetting')]",
+          "sqlConnectionString": "[parameters('sql_1_sqlConnectionString')]"
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('st-proactivemetering-logicapp-Test-custconnector3_1_Connection_Name')]",
+      "location": "northeurope",
+      "properties": {
+        "api": {
+          "id": "[resourceId('Microsoft.Web/customApis', 'st-proactivemetering-logicapp-Test-custconnector3')]"
+        },
+        "displayName": "[parameters('st-proactivemetering-logicapp-Test-custconnector3_1_Connection_DisplayName')]",
+        "parameterValues": {
+          "authType": "[parameters('st-proactivemetering-logicapp-Test-custconnector3_1_authType')]",
+          "gateway": {
+            "id": "[parameters('st-proactivemetering-logicapp-Test-custconnector3_1_gateway_id')]"
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}

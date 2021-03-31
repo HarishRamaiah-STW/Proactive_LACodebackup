@@ -1,0 +1,844 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "keyvault_1_Connection_Name": {
+      "type": "string",
+      "defaultValue": "keyvault-1"
+    },
+    "keyvault_1_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "Harish.Ramaiah@severntrent.co.uk"
+    },
+    "keyvault_1_vaultName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the vault"
+      },
+      "defaultValue": "stproactivetestneukv"
+    },
+    "st-proactivemetering-logicapp-Test-custconnector2_1_Connection_Name": {
+      "type": "string",
+      "defaultValue": "st-proactivemetering-logicapp-Test-custconnector2-1"
+    },
+    "st-proactivemetering-logicapp-Test-custconnector2_1_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "logicappTestConnectors"
+    },
+    "st-proactivemetering-logicapp-Test-custconnector2_1_authType": {
+      "type": "string",
+      "metadata": {
+        "description": "Authentication type to connect to your API"
+      },
+      "defaultValue": "anonymous",
+      "allowedValues": [
+        "none"
+      ]
+    },
+    "st-proactivemetering-logicapp-Test-custconnector2_1_gateway_id": {
+      "type": "string",
+      "defaultValue": "/subscriptions/39145e23-d044-41c8-a83d-4bab22cc8f5d/resourceGroups/st-proactivemetering-dev-neu-rg/providers/Microsoft.Web/connectionGateways/st-proactivemetering-neu-datagw"
+    },
+    "sql_1_Connection_Name": {
+      "type": "string",
+      "defaultValue": "sql"
+    },
+    "sql_1_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "st-proactivemetering-test-sqldb st-proactivemetering-test-neu-sqlserver.database.windows.net"
+    },
+    "sql_1_server": {
+      "type": "string",
+      "metadata": {
+        "description": "SQL server name"
+      }
+    },
+    "sql_1_database": {
+      "type": "string",
+      "metadata": {
+        "description": "SQL database name"
+      }
+    },
+    "sql_1_username": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Username credential"
+      }
+    },
+    "sql_1_password": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password credential"
+      }
+    },
+    "sql_1_encryptConnection": {
+      "type": "bool",
+      "metadata": {
+        "description": "Encrypt Connection"
+      }
+    },
+    "sql_1_privacySetting": {
+      "type": "string",
+      "metadata": {
+        "description": "Privacy Setting"
+      },
+      "allowedValues": [
+        "None",
+        "Private",
+        "Organizational",
+        "Public"
+      ]
+    },
+    "sql_1_sqlConnectionString": {
+      "type": "securestring",
+      "metadata": {
+        "description": "SQL Connection String"
+      }
+    },
+    "sql_2_Connection_Name": {
+      "type": "string",
+      "defaultValue": "sql-1"
+    },
+    "sql_2_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "st-proactivemetering-test-sqldb st-proactivemetering-test-neu-sqlserver.database.windows.net"
+    },
+    "sql_2_server": {
+      "type": "string",
+      "metadata": {
+        "description": "SQL server name"
+      }
+    },
+    "sql_2_database": {
+      "type": "string",
+      "metadata": {
+        "description": "SQL database name"
+      }
+    },
+    "sql_2_username": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Username credential"
+      }
+    },
+    "sql_2_password": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password credential"
+      }
+    },
+    "sql_2_encryptConnection": {
+      "type": "bool",
+      "metadata": {
+        "description": "Encrypt Connection"
+      }
+    },
+    "sql_2_privacySetting": {
+      "type": "string",
+      "metadata": {
+        "description": "Privacy Setting"
+      },
+      "allowedValues": [
+        "None",
+        "Private",
+        "Organizational",
+        "Public"
+      ]
+    },
+    "sql_2_sqlConnectionString": {
+      "type": "securestring",
+      "metadata": {
+        "description": "SQL Connection String"
+      }
+    },
+    "LogicAppLocation": {
+      "type": "string",
+      "minLength": 1,
+      "allowedValues": [
+        "[resourceGroup().location]",
+        "eastasia",
+        "southeastasia",
+        "centralus",
+        "eastus",
+        "eastus2",
+        "westus",
+        "northcentralus",
+        "southcentralus",
+        "northeurope",
+        "westeurope",
+        "japanwest",
+        "japaneast",
+        "brazilsouth",
+        "australiaeast",
+        "australiasoutheast",
+        "southindia",
+        "centralindia",
+        "westindia",
+        "canadacentral",
+        "canadaeast",
+        "uksouth",
+        "ukwest",
+        "westcentralus",
+        "westus2",
+        "koreacentral",
+        "koreasouth",
+        "francecentral",
+        "francesouth",
+        "uaecentral",
+        "uaenorth",
+        "southafricanorth",
+        "southafricawest",
+        "switzerlandnorth",
+        "switzerlandwest",
+        "germanynorth",
+        "germanywestcentral",
+        "norwayeast",
+        "brazilsoutheast"
+      ],
+      "defaultValue": "northeurope"
+    },
+    "LogicAppName": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "st-proactivemetering-test-neu-la5"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "actions": {
+            "Get_Requested_Jobs": {
+              "runAfter": {
+                "Job_Trigger_var": [
+                  "Succeeded"
+                ]
+              },
+              "type": "ApiConnection",
+              "inputs": {
+                "body": {
+                  "query": "Select top @{body('Joblimit__Keyvault')?['value']}  R.* from [dbo].[JOB_REQUESTED] R \nWHERE R.Job_Requeated='Y'\nAND R.PropertyID not in \n (select C.PropertyID FROM [dbo].[JOB_CREATED] C) \n  AND R.FunctionalLocation not in\n  (select FunctionalLocation from INITIAL_DATA_LOAD WHERE ([RemovedFromPlan] = 'Y')) \n    ORDER BY Job_Requeated_Date"
+                },
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['sql_3']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/query/sql"
+              },
+              "runtimeConfiguration": {
+                "staticResult": {
+                  "staticResultOptions": "Disabled",
+                  "name": "Get_Requested_Jobs0"
+                }
+              }
+            },
+            "JobCode_Get_secret": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['keyvault']['connectionId']"
+                  }
+                },
+                "method": "get",
+                "path": "/secrets/@{encodeURIComponent('jobcode-creation')}/value"
+              },
+              "runAfter": {
+                "Status_Variable": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Job_Trigger_var": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "JobTriggerTime",
+                    "type": "string"
+                  }
+                ]
+              },
+              "runAfter": {
+                "Joblimit__Keyvault": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Joblimit__Keyvault": {
+              "runAfter": {
+                "JobCode_Get_secret": [
+                  "Succeeded"
+                ]
+              },
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['keyvault']['connectionId']"
+                  }
+                },
+                "method": "get",
+                "path": "/secrets/@{encodeURIComponent('dailyjoblimit')}/value"
+              }
+            },
+            "Karaf_For_each_call": {
+              "type": "Foreach",
+              "foreach": "@body('Get_Requested_Jobs')?['resultsets']?['Table1']",
+              "actions": {
+                "JobTriggerTime_Set": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "JobTriggerTime",
+                    "value": "@{utcNow()}"
+                  },
+                  "runAfter": {}
+                },
+                "Job_Creation_Condition": {
+                  "type": "If",
+                  "expression": {
+                    "and": [
+                      {
+                        "equals": [
+                          "@variables('Statuscode')",
+                          "@trim('200')"
+                        ]
+                      }
+                    ]
+                  },
+                  "actions": {
+                    "Insert_Job_Created_on_Success": {
+                      "runAfter": {
+                        "Parse_JSON": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "ApiConnection",
+                      "inputs": {
+                        "body": {
+                          "FunctionalLocation": "@{items('Karaf_For_each_call')?['FunctionalLocation']}",
+                          "Job_Created": "Y",
+                          "Job_Created_Date": "@{utcNow()}",
+                          "Job_Trigger_Time": "@variables('JobTriggerTime')",
+                          "OrderNumber": "@body('Parse_JSON')?['WorkOrderId']",
+                          "PropertyID": "@{items('Karaf_For_each_call')?['PropertyID']}"
+                        },
+                        "host": {
+                          "connection": {
+                            "name": "@parameters('$connections')['sql_2']['connectionId']"
+                          }
+                        },
+                        "method": "post",
+                        "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/tables/@{encodeURIComponent(encodeURIComponent('[dbo].[JOB_CREATED]'))}/items"
+                      }
+                    },
+                    "Parse_JSON": {
+                      "type": "ParseJson",
+                      "inputs": {
+                        "content": "@body('KarafLogicAppConnectors')",
+                        "schema": {
+                          "properties": {
+                            "CodeGroup": {
+                              "type": "string"
+                            },
+                            "FlocId": {
+                              "type": "string"
+                            },
+                            "JobCode": {
+                              "type": "string"
+                            },
+                            "Notes": {
+                              "type": "string"
+                            },
+                            "NotificationContactName": {
+                              "type": "string"
+                            },
+                            "NotificationContactNumber": {
+                              "type": "string"
+                            },
+                            "NotificationType": {
+                              "type": "string"
+                            },
+                            "ServiceNotificationId": {
+                              "type": "string"
+                            },
+                            "Status": {
+                              "type": "string"
+                            },
+                            "TargetServiceOrder": {
+                              "type": "string"
+                            },
+                            "WorkOrderId": {
+                              "type": "string"
+                            },
+                            "WorkOrderType": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "runAfter": {}
+                    }
+                  },
+                  "runAfter": {
+                    "Set_variable": [
+                      "Succeeded",
+                      "Failed"
+                    ]
+                  },
+                  "else": {
+                    "actions": {
+                      "Delay": {
+                        "type": "Wait",
+                        "inputs": {
+                          "interval": {
+                            "count": "@body('Job_Failure_Delay_Value')?['value']",
+                            "unit": "Second"
+                          }
+                        },
+                        "runAfter": {
+                          "Job_Failure_Delay_Value": [
+                            "Succeeded"
+                          ]
+                        }
+                      },
+                      "Job_Creation_Failure_Condition_": {
+                        "type": "If",
+                        "expression": {
+                          "and": [
+                            {
+                              "equals": [
+                                "@variables('Statuscode')",
+                                "@trim('400')"
+                              ]
+                            }
+                          ]
+                        },
+                        "actions": {
+                          "For_each": {
+                            "type": "Foreach",
+                            "foreach": "@body('Parse_JSON_for_Job_Errorcode')?['ResultSets']?['Table1']",
+                            "actions": {
+                              "Condition": {
+                                "type": "If",
+                                "expression": {
+                                  "and": [
+                                    {
+                                      "greater": [
+                                        "@items('For_each')?['Errorcount']",
+                                        0
+                                      ]
+                                    }
+                                  ]
+                                },
+                                "actions": {
+                                  "Insert_Job_details_on_Failure_with_code": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                      "body": {
+                                        "ErrorCode": "@body('Parse_JSON_for_Failure')?['code']",
+                                        "FunctionalLocation": "@{items('Karaf_For_each_call')?['FunctionalLocation']}",
+                                        "Job_Trigger_Time": "@variables('JobTriggerTime')",
+                                        "PropertyID": "@{items('Karaf_For_each_call')?['PropertyID']}"
+                                      },
+                                      "host": {
+                                        "connection": {
+                                          "name": "@parameters('$connections')['sql_2']['connectionId']"
+                                        }
+                                      },
+                                      "method": "post",
+                                      "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/tables/@{encodeURIComponent(encodeURIComponent('[dbo].[JOB_CREATED]'))}/items"
+                                    }
+                                  }
+                                },
+                                "runAfter": {},
+                                "else": {
+                                  "actions": {
+                                    "Insert_Job_details_on_Failure_without_code": {
+                                      "runAfter": {},
+                                      "type": "ApiConnection",
+                                      "inputs": {
+                                        "body": {
+                                          "Detail_Error_Description": "@body('Parse_JSON_for_Failure')?['details']?['Cause']",
+                                          "ErrorDescription": "@body('Parse_JSON_for_Failure')?['description']",
+                                          "FunctionalLocation": "@{items('Karaf_For_each_call')?['FunctionalLocation']}",
+                                          "Job_Trigger_Time": "@variables('JobTriggerTime')",
+                                          "PropertyID": "@{items('Karaf_For_each_call')?['PropertyID']}"
+                                        },
+                                        "host": {
+                                          "connection": {
+                                            "name": "@parameters('$connections')['sql_2']['connectionId']"
+                                          }
+                                        },
+                                        "method": "post",
+                                        "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/tables/@{encodeURIComponent(encodeURIComponent('[dbo].[JOB_CREATED]'))}/items"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "runAfter": {
+                              "Parse_JSON_for_Job_Errorcode": [
+                                "Succeeded"
+                              ]
+                            }
+                          },
+                          "Job_Error_SQL_": {
+                            "runAfter": {
+                              "Parse_JSON_for_Failure": [
+                                "Succeeded"
+                              ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                              "body": {
+                                "query": "select count(*) Errorcount from [dbo].[JOB_FAILURE_LOOKUP] where ErrorCode=@{body('Parse_JSON_for_Failure')?['code']}"
+                              },
+                              "host": {
+                                "connection": {
+                                  "name": "@parameters('$connections')['sql_2']['connectionId']"
+                                }
+                              },
+                              "method": "post",
+                              "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/query/sql"
+                            }
+                          },
+                          "Parse_JSON_for_Failure": {
+                            "type": "ParseJson",
+                            "inputs": {
+                              "content": "@body('KarafLogicAppConnectors')",
+                              "schema": {
+                                "properties": {
+                                  "category": {
+                                    "type": "string"
+                                  },
+                                  "code": {
+                                    "type": "string"
+                                  },
+                                  "debugInfo": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "details": {
+                                    "properties": {
+                                      "Cause": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object"
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            },
+                            "runAfter": {}
+                          },
+                          "Parse_JSON_for_Job_Errorcode": {
+                            "type": "ParseJson",
+                            "inputs": {
+                              "content": "@body('Job_Error_SQL_')",
+                              "schema": {
+                                "properties": {
+                                  "OutputParameters": {
+                                    "properties": {},
+                                    "type": "object"
+                                  },
+                                  "ResultSets": {
+                                    "properties": {
+                                      "Table1": {
+                                        "items": {
+                                          "properties": {
+                                            "Errorcount": {
+                                              "type": "integer"
+                                            }
+                                          },
+                                          "required": [
+                                            "Errorcount"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "type": "array"
+                                      }
+                                    },
+                                    "type": "object"
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            },
+                            "runAfter": {
+                              "Job_Error_SQL_": [
+                                "Succeeded"
+                              ]
+                            }
+                          }
+                        },
+                        "runAfter": {},
+                        "else": {
+                          "actions": {
+                            "Job_failure_other_errors": {
+                              "runAfter": {},
+                              "type": "ApiConnection",
+                              "inputs": {
+                                "body": {
+                                  "ErrorCode": "@variables('Statuscode')",
+                                  "FunctionalLocation": "@{items('Karaf_For_each_call')?['FunctionalLocation']}",
+                                  "Job_Trigger_Time": "@variables('JobTriggerTime')",
+                                  "PropertyID": "@{items('Karaf_For_each_call')?['PropertyID']}"
+                                },
+                                "host": {
+                                  "connection": {
+                                    "name": "@parameters('$connections')['sql_2']['connectionId']"
+                                  }
+                                },
+                                "method": "post",
+                                "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/tables/@{encodeURIComponent(encodeURIComponent('[dbo].[JOB_CREATED]'))}/items"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "Job_Failure_Delay_Value": {
+                        "runAfter": {
+                          "Job_Creation_Failure_Condition_": [
+                            "Succeeded"
+                          ]
+                        },
+                        "type": "ApiConnection",
+                        "inputs": {
+                          "host": {
+                            "connection": {
+                              "name": "@parameters('$connections')['keyvault']['connectionId']"
+                            }
+                          },
+                          "method": "get",
+                          "path": "/secrets/@{encodeURIComponent('delayjobcreationfailure')}/value"
+                        }
+                      }
+                    }
+                  }
+                },
+                "KarafLogicAppConnectors": {
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connection": {
+                        "name": "@parameters('$connections')['st-proactivemetering-logicapp-Test-custconnector2']['connectionId']"
+                      }
+                    },
+                    "method": "post",
+                    "body": {
+                      "codeGroup": "MEPRMI",
+                      "flocId": "@{items('Karaf_For_each_call')?['FunctionalLocation']}",
+                      "jobCode": "@{body('JobCode_Get_secret')?['value']}",
+                      "notificationType": "Z6",
+                      "propertyId": "@{items('Karaf_For_each_call')?['PropertyID']}"
+                    },
+                    "headers": {
+                      "x-endpoint-shared-secret": "08697fcb-27fc-4182-a974-394ba955bdd7"
+                    },
+                    "path": "/cxf/job-booking/meter-jobs",
+                    "retryPolicy": {
+                      "type": "none"
+                    }
+                  },
+                  "runAfter": {
+                    "JobTriggerTime_Set": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "Set_variable": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "Statuscode",
+                    "value": "@{outputs('KarafLogicAppConnectors')['statusCode']}"
+                  },
+                  "runAfter": {
+                    "KarafLogicAppConnectors": [
+                      "Succeeded",
+                      "Failed"
+                    ]
+                  }
+                }
+              },
+              "runAfter": {
+                "Get_Requested_Jobs": [
+                  "Succeeded"
+                ]
+              },
+              "runtimeConfiguration": {
+                "concurrency": {
+                  "repetitions": 1
+                }
+              }
+            },
+            "Status_Variable": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "Statuscode",
+                    "type": "string"
+                  }
+                ]
+              },
+              "runAfter": {}
+            }
+          },
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            }
+          },
+          "triggers": {
+            "Recurrence": {
+              "type": "Recurrence",
+              "recurrence": {
+                "frequency": "Day",
+                "interval": 1
+              }
+            }
+          },
+          "contentVersion": "1.0.0.0",
+          "outputs": {},
+          "staticResults": {
+            "Get_Requested_Jobs0": {
+              "status": "Succeeded",
+              "outputs": {
+                "headers": {},
+                "statusCode": "OK"
+              }
+            }
+          }
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "sql_3": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'sql')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('sql_1_Connection_Name'))]",
+                "connectionName": "[parameters('sql_1_Connection_Name')]"
+              },
+              "keyvault": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'keyvault')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('keyvault_1_Connection_Name'))]",
+                "connectionName": "[parameters('keyvault_1_Connection_Name')]"
+              },
+              "sql_2": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'sql')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('sql_2_Connection_Name'))]",
+                "connectionName": "[parameters('sql_2_Connection_Name')]"
+              },
+              "st-proactivemetering-logicapp-Test-custconnector2": {
+                "id": "[resourceId('Microsoft.Web/customApis', 'st-proactivemetering-logicapp-Test-custconnector2')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('st-proactivemetering-logicapp-Test-custconnector2_1_Connection_Name'))]",
+                "connectionName": "[parameters('st-proactivemetering-logicapp-Test-custconnector2_1_Connection_Name')]"
+              }
+            }
+          }
+        }
+      },
+      "name": "[parameters('LogicAppName')]",
+      "type": "Microsoft.Logic/workflows",
+      "location": "[parameters('LogicAppLocation')]",
+      "tags": {
+        "displayName": "LogicApp"
+      },
+      "apiVersion": "2016-06-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('sql_1_Connection_Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('keyvault_1_Connection_Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('sql_2_Connection_Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('st-proactivemetering-logicapp-Test-custconnector2_1_Connection_Name'))]"
+      ]
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('keyvault_1_Connection_Name')]",
+      "location": "northeurope",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'keyvault')]"
+        },
+        "displayName": "[parameters('keyvault_1_Connection_DisplayName')]",
+        "nonSecretParameterValues": {
+          "vaultName": "[parameters('keyvault_1_vaultName')]"
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('st-proactivemetering-logicapp-Test-custconnector2_1_Connection_Name')]",
+      "location": "northeurope",
+      "properties": {
+        "api": {
+          "id": "[resourceId('Microsoft.Web/customApis', 'st-proactivemetering-logicapp-Test-custconnector2')]"
+        },
+        "displayName": "[parameters('st-proactivemetering-logicapp-Test-custconnector2_1_Connection_DisplayName')]",
+        "parameterValues": {
+          "authType": "[parameters('st-proactivemetering-logicapp-Test-custconnector2_1_authType')]",
+          "gateway": {
+            "id": "[parameters('st-proactivemetering-logicapp-Test-custconnector2_1_gateway_id')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('sql_1_Connection_Name')]",
+      "location": "northeurope",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'sql')]"
+        },
+        "displayName": "[parameters('sql_1_Connection_DisplayName')]",
+        "parameterValues": {
+          "server": "[parameters('sql_1_server')]",
+          "database": "[parameters('sql_1_database')]",
+          "username": "[parameters('sql_1_username')]",
+          "password": "[parameters('sql_1_password')]",
+          "encryptConnection": "[parameters('sql_1_encryptConnection')]",
+          "privacySetting": "[parameters('sql_1_privacySetting')]",
+          "sqlConnectionString": "[parameters('sql_1_sqlConnectionString')]"
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('sql_2_Connection_Name')]",
+      "location": "northeurope",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'sql')]"
+        },
+        "displayName": "[parameters('sql_2_Connection_DisplayName')]",
+        "parameterValues": {
+          "server": "[parameters('sql_2_server')]",
+          "database": "[parameters('sql_2_database')]",
+          "username": "[parameters('sql_2_username')]",
+          "password": "[parameters('sql_2_password')]",
+          "encryptConnection": "[parameters('sql_2_encryptConnection')]",
+          "privacySetting": "[parameters('sql_2_privacySetting')]",
+          "sqlConnectionString": "[parameters('sql_2_sqlConnectionString')]"
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}
