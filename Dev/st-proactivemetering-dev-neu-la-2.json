@@ -1,0 +1,502 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "sql_1_Connection_Name": {
+      "type": "string",
+      "defaultValue": "sql-1"
+    },
+    "sql_1_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "st-proactivemetering-dev-sqldb st-proactivemetering-dev-neu-sqlserver.database.windows.net"
+    },
+    "sql_1_server": {
+      "type": "string",
+      "metadata": {
+        "description": "SQL server name"
+      }
+    },
+    "sql_1_database": {
+      "type": "string",
+      "metadata": {
+        "description": "SQL database name"
+      }
+    },
+    "sql_1_username": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Username credential"
+      }
+    },
+    "sql_1_password": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password credential"
+      }
+    },
+    "sql_1_encryptConnection": {
+      "type": "bool",
+      "metadata": {
+        "description": "Encrypt Connection"
+      }
+    },
+    "sql_1_privacySetting": {
+      "type": "string",
+      "metadata": {
+        "description": "Privacy Setting"
+      },
+      "allowedValues": [
+        "None",
+        "Private",
+        "Organizational",
+        "Public"
+      ]
+    },
+    "sql_1_sqlConnectionString": {
+      "type": "securestring",
+      "metadata": {
+        "description": "SQL Connection String"
+      }
+    },
+    "sql_2_Connection_Name": {
+      "type": "string",
+      "defaultValue": "sql-2"
+    },
+    "sql_2_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "st-proactivemetering-dev-sqldb st-proactivemetering-dev-neu-sqlserver.database.windows.net"
+    },
+    "sql_2_server": {
+      "type": "string",
+      "metadata": {
+        "description": "SQL server name"
+      }
+    },
+    "sql_2_database": {
+      "type": "string",
+      "metadata": {
+        "description": "SQL database name"
+      }
+    },
+    "sql_2_username": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Username credential"
+      }
+    },
+    "sql_2_password": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password credential"
+      }
+    },
+    "sql_2_encryptConnection": {
+      "type": "bool",
+      "metadata": {
+        "description": "Encrypt Connection"
+      }
+    },
+    "sql_2_privacySetting": {
+      "type": "string",
+      "metadata": {
+        "description": "Privacy Setting"
+      },
+      "allowedValues": [
+        "None",
+        "Private",
+        "Organizational",
+        "Public"
+      ]
+    },
+    "sql_2_sqlConnectionString": {
+      "type": "securestring",
+      "metadata": {
+        "description": "SQL Connection String"
+      }
+    },
+    "LogicAppLocation": {
+      "type": "string",
+      "minLength": 1,
+      "allowedValues": [
+        "[resourceGroup().location]",
+        "eastasia",
+        "southeastasia",
+        "centralus",
+        "eastus",
+        "eastus2",
+        "westus",
+        "northcentralus",
+        "southcentralus",
+        "northeurope",
+        "westeurope",
+        "japanwest",
+        "japaneast",
+        "brazilsouth",
+        "australiaeast",
+        "australiasoutheast",
+        "southindia",
+        "centralindia",
+        "westindia",
+        "canadacentral",
+        "canadaeast",
+        "uksouth",
+        "ukwest",
+        "westcentralus",
+        "westus2",
+        "koreacentral",
+        "koreasouth",
+        "francecentral",
+        "francesouth",
+        "uaecentral",
+        "uaenorth",
+        "southafricanorth",
+        "southafricawest",
+        "switzerlandnorth",
+        "switzerlandwest",
+        "germanynorth",
+        "germanywestcentral",
+        "norwayeast",
+        "brazilsoutheast"
+      ],
+      "defaultValue": "northeurope"
+    },
+    "LogicAppName": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "st-proactivemetering-dev-neu-la-2"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "actions": {
+            "For_each": {
+              "type": "Foreach",
+              "foreach": "@body('GET_JOB_PROGRESS')?['value']",
+              "actions": {
+                "Set_variable": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "varStatus",
+                    "value": "@items('For_each')?['OrderNumber']"
+                  },
+                  "runAfter": {}
+                },
+                "Switch": {
+                  "type": "Switch",
+                  "expression": "@items('For_each')?['Operation_Status']",
+                  "cases": {
+                    "Complete": {
+                      "case": "COMP",
+                      "actions": {
+                        "Condition_Closing_Action_": {
+                          "type": "If",
+                          "expression": {
+                            "or": [
+                              {
+                                "equals": [
+                                  "@items('For_each')?['Action_code']",
+                                  "PISM"
+                                ]
+                              },
+                              {
+                                "equals": [
+                                  "@items('For_each')?['Action_code']",
+                                  "PIBD"
+                                ]
+                              }
+                            ]
+                          },
+                          "actions": {
+                            "Insert_row_track_job_progress": {
+                              "runAfter": {},
+                              "type": "ApiConnection",
+                              "inputs": {
+                                "body": {
+                                  "Closing_action_code": "@items('For_each')?['Action_code']",
+                                  "Closing_action_code_Desc": "@items('For_each')?['Action_code_Desc']",
+                                  "Closing_action_code_group": "@items('For_each')?['Action_code_group']",
+                                  "FunctionalLocation": "@{items('For_each')?['OrderNumber']}",
+                                  "Operation": "@items('For_each')?['Operation']",
+                                  "Operation_Status": "@items('For_each')?['Operation_Status']",
+                                  "Operation_status_change_Date": "@items('For_each')?['Operation_status_change_Date']",
+                                  "OrderNumber": "@{items('For_each')?['OrderNumber']}",
+                                  "Plan_Status": "Removed",
+                                  "Problem_code": "@items('For_each')?['Problem_code']",
+                                  "Problem_code_Desc": "@items('For_each')?['Problem_code_Desc']",
+                                  "Problem_code_group": "@items('For_each')?['Problem_code_group']",
+                                  "Reason_Plan_Removal": "Proactive meter installed"
+                                },
+                                "host": {
+                                  "connection": {
+                                    "name": "@parameters('$connections')['sql']['connectionId']"
+                                  }
+                                },
+                                "method": "post",
+                                "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/tables/@{encodeURIComponent(encodeURIComponent('[dbo].[TRACK_JOB_PROGRESS]'))}/items"
+                              }
+                            }
+                          },
+                          "runAfter": {},
+                          "else": {
+                            "actions": {
+                              "Insert_row_PIAB_track_job_progress": {
+                                "runAfter": {},
+                                "type": "ApiConnection",
+                                "inputs": {
+                                  "body": {
+                                    "Closing_action_code": "@items('For_each')?['Action_code']",
+                                    "Closing_action_code_Desc": "@items('For_each')?['Action_code_Desc']",
+                                    "Closing_action_code_group": "@items('For_each')?['Action_code_group']",
+                                    "FunctionalLocation": "@{items('For_each')?['OrderNumber']}",
+                                    "Operation": "@items('For_each')?['Operation']",
+                                    "Operation_Status": "@items('For_each')?['Operation_Status']",
+                                    "Operation_status_change_Date": "@items('For_each')?['Operation_status_change_Date']",
+                                    "OrderNumber": "@items('For_each')?['OrderNumber']",
+                                    "Plan_Status": "Removed",
+                                    "Problem_code": "@items('For_each')?['Problem_code']",
+                                    "Problem_code_Desc": "@items('For_each')?['Problem_code_Desc']",
+                                    "Problem_code_group": "@items('For_each')?['Problem_code_group']",
+                                    "Reason_Plan_Removal": "Proactive install aborted"
+                                  },
+                                  "host": {
+                                    "connection": {
+                                      "name": "@parameters('$connections')['sql']['connectionId']"
+                                    }
+                                  },
+                                  "method": "post",
+                                  "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/tables/@{encodeURIComponent(encodeURIComponent('[dbo].[TRACK_JOB_PROGRESS]'))}/items"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "Rejected": {
+                      "case": "RJTD",
+                      "actions": {
+                        "Insert_row_(V2)_2": {
+                          "runAfter": {},
+                          "type": "ApiConnection",
+                          "inputs": {
+                            "body": {
+                              "Closing_action_code": "@items('For_each')?['Action_code']",
+                              "Closing_action_code_Desc": "@items('For_each')?['Action_code_Desc']",
+                              "Closing_action_code_group": "@items('For_each')?['Action_code_group']",
+                              "FunctionalLocation": "@{items('For_each')?['OrderNumber']}",
+                              "Operation": "@items('For_each')?['Operation']",
+                              "Operation_Status": "@items('For_each')?['Operation_Status']",
+                              "Operation_status_change_Date": "@items('For_each')?['Operation_status_change_Date']",
+                              "OrderNumber": "@items('For_each')?['OrderNumber']",
+                              "Plan_Status": "Removed",
+                              "Problem_code": "@items('For_each')?['Problem_code']",
+                              "Problem_code_Desc": "@items('For_each')?['Problem_code_Desc']",
+                              "Problem_code_group": "@items('For_each')?['Problem_code_group']",
+                              "Reason_Plan_Removal": "Proactive install cancelled"
+                            },
+                            "host": {
+                              "connection": {
+                                "name": "@parameters('$connections')['sql']['connectionId']"
+                              }
+                            },
+                            "method": "post",
+                            "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/tables/@{encodeURIComponent(encodeURIComponent('[dbo].[TRACK_JOB_PROGRESS]'))}/items"
+                          }
+                        }
+                      }
+                    },
+                    "Suspended_No_Return": {
+                      "case": "SUNR",
+                      "actions": {
+                        "Insert_row_(V2)": {
+                          "runAfter": {},
+                          "type": "ApiConnection",
+                          "inputs": {
+                            "body": {
+                              "Closing_action_code": "@items('For_each')?['Action_code']",
+                              "Closing_action_code_Desc": "@items('For_each')?['Action_code_Desc']",
+                              "Closing_action_code_group": "@items('For_each')?['Action_code_group']",
+                              "FunctionalLocation": "@{items('For_each')?['OrderNumber']}",
+                              "Operation": "@items('For_each')?['Operation']",
+                              "Operation_Status": "@items('For_each')?['Operation_Status']",
+                              "Operation_status_change_Date": "@items('For_each')?['Operation_status_change_Date']",
+                              "OrderNumber": "@items('For_each')?['OrderNumber']",
+                              "Plan_Status": "Removed",
+                              "Problem_code": "@items('For_each')?['Problem_code']",
+                              "Problem_code_Desc": "@items('For_each')?['Problem_code_Desc']",
+                              "Problem_code_group": "@items('For_each')?['Problem_code_group']",
+                              "Reason_Plan_Removal": "Proactive install cancelled"
+                            },
+                            "host": {
+                              "connection": {
+                                "name": "@parameters('$connections')['sql_1']['connectionId']"
+                              }
+                            },
+                            "method": "post",
+                            "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/tables/@{encodeURIComponent(encodeURIComponent('[dbo].[TRACK_JOB_PROGRESS]'))}/items"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "default": {
+                    "actions": {}
+                  },
+                  "runAfter": {
+                    "Set_variable": [
+                      "Succeeded"
+                    ]
+                  }
+                }
+              },
+              "runAfter": {
+                "GET_JOB_PROGRESS": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "GET_JOB_PROGRESS": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['sql_1']['connectionId']"
+                  }
+                },
+                "method": "get",
+                "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(variables('varSqlServer')))},@{encodeURIComponent(encodeURIComponent(variables('varStatus')))}/tables/@{encodeURIComponent(encodeURIComponent('[dbo].[STG_TRACK_JOB_PROGRESS]'))}/items"
+              },
+              "runAfter": {
+                "Status": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Status": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "varStatus",
+                    "type": "string",
+                    "value": "st-proactivemetering-dev-sqldb"
+                  }
+                ]
+              },
+              "runAfter": {
+                "Varsql": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Varsql": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "varSqlServer",
+                    "type": "string",
+                    "value": "st-proactivemetering-dev-neu-sqlserver.database.windows.net"
+                  }
+                ]
+              },
+              "runAfter": {}
+            }
+          },
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            }
+          },
+          "triggers": {
+            "Recurrence": {
+              "type": "Recurrence",
+              "recurrence": {
+                "frequency": "Month",
+                "interval": 1
+              }
+            }
+          },
+          "contentVersion": "1.0.0.0",
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "sql": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'sql')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('sql_1_Connection_Name'))]",
+                "connectionName": "[parameters('sql_1_Connection_Name')]"
+              },
+              "sql_1": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'sql')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('sql_2_Connection_Name'))]",
+                "connectionName": "[parameters('sql_2_Connection_Name')]"
+              }
+            }
+          }
+        }
+      },
+      "name": "[parameters('LogicAppName')]",
+      "type": "Microsoft.Logic/workflows",
+      "location": "[parameters('LogicAppLocation')]",
+      "tags": {
+        "displayName": "LogicApp"
+      },
+      "apiVersion": "2016-06-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('sql_1_Connection_Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('sql_2_Connection_Name'))]"
+      ]
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('sql_1_Connection_Name')]",
+      "location": "northeurope",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'sql')]"
+        },
+        "displayName": "[parameters('sql_1_Connection_DisplayName')]",
+        "parameterValues": {
+          "server": "[parameters('sql_1_server')]",
+          "database": "[parameters('sql_1_database')]",
+          "username": "[parameters('sql_1_username')]",
+          "password": "[parameters('sql_1_password')]",
+          "encryptConnection": "[parameters('sql_1_encryptConnection')]",
+          "privacySetting": "[parameters('sql_1_privacySetting')]",
+          "sqlConnectionString": "[parameters('sql_1_sqlConnectionString')]"
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('sql_2_Connection_Name')]",
+      "location": "northeurope",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'sql')]"
+        },
+        "displayName": "[parameters('sql_2_Connection_DisplayName')]",
+        "parameterValues": {
+          "server": "[parameters('sql_2_server')]",
+          "database": "[parameters('sql_2_database')]",
+          "username": "[parameters('sql_2_username')]",
+          "password": "[parameters('sql_2_password')]",
+          "encryptConnection": "[parameters('sql_2_encryptConnection')]",
+          "privacySetting": "[parameters('sql_2_privacySetting')]",
+          "sqlConnectionString": "[parameters('sql_2_sqlConnectionString')]"
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}

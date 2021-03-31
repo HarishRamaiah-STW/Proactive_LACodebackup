@@ -1,0 +1,200 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "st-proactivemetering-logicapp-custconnector2_1_Connection_Name": {
+      "type": "string",
+      "defaultValue": "st-proactivemetering-logicapp-custconnector2-1"
+    },
+    "st-proactivemetering-logicapp-custconnector2_1_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "stwater"
+    },
+    "st-proactivemetering-logicapp-custconnector2_1_authType": {
+      "type": "string",
+      "metadata": {
+        "description": "Authentication type to connect to your API"
+      },
+      "defaultValue": "anonymous",
+      "allowedValues": [
+        "none"
+      ]
+    },
+    "st-proactivemetering-logicapp-custconnector2_1_gateway_id": {
+      "type": "string",
+      "defaultValue": "/subscriptions/39145e23-d044-41c8-a83d-4bab22cc8f5d/resourceGroups/st-proactivemetering-dev-neu-rg/providers/Microsoft.Web/connectionGateways/st-proactivemetering-neu-datagw"
+    },
+    "LogicAppLocation": {
+      "type": "string",
+      "minLength": 1,
+      "allowedValues": [
+        "[resourceGroup().location]",
+        "eastasia",
+        "southeastasia",
+        "centralus",
+        "eastus",
+        "eastus2",
+        "westus",
+        "northcentralus",
+        "southcentralus",
+        "northeurope",
+        "westeurope",
+        "japanwest",
+        "japaneast",
+        "brazilsouth",
+        "australiaeast",
+        "australiasoutheast",
+        "southindia",
+        "centralindia",
+        "westindia",
+        "canadacentral",
+        "canadaeast",
+        "uksouth",
+        "ukwest",
+        "westcentralus",
+        "westus2",
+        "koreacentral",
+        "koreasouth",
+        "francecentral",
+        "francesouth",
+        "uaecentral",
+        "uaenorth",
+        "southafricanorth",
+        "southafricawest",
+        "switzerlandnorth",
+        "switzerlandwest",
+        "germanynorth",
+        "germanywestcentral",
+        "norwayeast",
+        "brazilsoutheast"
+      ],
+      "defaultValue": "northeurope"
+    },
+    "LogicAppName": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "st-proactivemetering-dev-neu-la-6"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "actions": {
+            "KarafLogicAppConnector": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['st-proactivemetering-logicapp-custconnector2_1']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "body": {
+                  "codeGroup": "MEPRMI",
+                  "flocId": "1773608",
+                  "jobCode": "PIBD",
+                  "notificationType": "Z6",
+                  "propertyId": "000000000000000000000831087732"
+                },
+                "headers": {
+                  "x-endpoint-shared-secret": "08697fcb-27fc-4182-a974-394ba955bdd7"
+                },
+                "path": "/cxf/job-booking/meter-jobs"
+              },
+              "runAfter": {
+                "VarRequest": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Set_variable": {
+              "type": "SetVariable",
+              "inputs": {
+                "name": "Statuscode",
+                "value": " @{actionOutputs('KarafLogicAppConnector')['statusCode']}"
+              },
+              "runAfter": {
+                "KarafLogicAppConnector": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "VarRequest": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "Statuscode",
+                    "type": "string"
+                  }
+                ]
+              },
+              "runAfter": {}
+            }
+          },
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            }
+          },
+          "triggers": {
+            "Recurrence": {
+              "type": "Recurrence",
+              "recurrence": {
+                "frequency": "Week",
+                "interval": 3
+              }
+            }
+          },
+          "contentVersion": "1.0.0.0",
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "st-proactivemetering-logicapp-custconnector2_1": {
+                "id": "[resourceId('Microsoft.Web/customApis', 'st-proactivemetering-logicapp-custconnector2')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('st-proactivemetering-logicapp-custconnector2_1_Connection_Name'))]",
+                "connectionName": "[parameters('st-proactivemetering-logicapp-custconnector2_1_Connection_Name')]"
+              }
+            }
+          }
+        }
+      },
+      "name": "[parameters('LogicAppName')]",
+      "type": "Microsoft.Logic/workflows",
+      "location": "[parameters('LogicAppLocation')]",
+      "tags": {
+        "displayName": "LogicApp"
+      },
+      "apiVersion": "2016-06-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('st-proactivemetering-logicapp-custconnector2_1_Connection_Name'))]"
+      ]
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('st-proactivemetering-logicapp-custconnector2_1_Connection_Name')]",
+      "location": "northeurope",
+      "properties": {
+        "api": {
+          "id": "[resourceId('Microsoft.Web/customApis', 'st-proactivemetering-logicapp-custconnector2')]"
+        },
+        "displayName": "[parameters('st-proactivemetering-logicapp-custconnector2_1_Connection_DisplayName')]",
+        "parameterValues": {
+          "authType": "[parameters('st-proactivemetering-logicapp-custconnector2_1_authType')]",
+          "gateway": {
+            "id": "[parameters('st-proactivemetering-logicapp-custconnector2_1_gateway_id')]"
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}

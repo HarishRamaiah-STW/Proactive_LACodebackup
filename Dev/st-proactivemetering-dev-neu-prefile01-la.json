@@ -1,0 +1,1259 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "st-proactivemetering-logicapp-Test-custconnector2_1_Connection_Name": {
+      "type": "string",
+      "defaultValue": "st-proactivemetering-logicapp-Test-custconnector2"
+    },
+    "st-proactivemetering-logicapp-Test-custconnector2_1_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "KarafLogicAppConnectorTest"
+    },
+    "st-proactivemetering-logicapp-Test-custconnector2_1_authType": {
+      "type": "string",
+      "metadata": {
+        "description": "Authentication type to connect to your API"
+      },
+      "defaultValue": "anonymous",
+      "allowedValues": [
+        "none"
+      ]
+    },
+    "st-proactivemetering-logicapp-Test-custconnector2_1_gateway_id": {
+      "type": "string",
+      "defaultValue": "/subscriptions/39145e23-d044-41c8-a83d-4bab22cc8f5d/resourceGroups/st-proactivemetering-dev-neu-rg/providers/Microsoft.Web/connectionGateways/st-proactivemetering-neu-datagw"
+    },
+    "st-proactivemetering-logicapp-custconnector2_1_Connection_Name": {
+      "type": "string",
+      "defaultValue": "st-proactivemetering-logicapp-custconnector2-1"
+    },
+    "st-proactivemetering-logicapp-custconnector2_1_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "stwater"
+    },
+    "st-proactivemetering-logicapp-custconnector2_1_authType": {
+      "type": "string",
+      "metadata": {
+        "description": "Authentication type to connect to your API"
+      },
+      "defaultValue": "anonymous",
+      "allowedValues": [
+        "none"
+      ]
+    },
+    "st-proactivemetering-logicapp-custconnector2_1_gateway_id": {
+      "type": "string",
+      "defaultValue": "/subscriptions/39145e23-d044-41c8-a83d-4bab22cc8f5d/resourceGroups/st-proactivemetering-dev-neu-rg/providers/Microsoft.Web/connectionGateways/st-proactivemetering-neu-datagw"
+    },
+    "azureblob_1_Connection_Name": {
+      "type": "string",
+      "defaultValue": "azureblob"
+    },
+    "azureblob_1_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "STW-MET-DEV-Job"
+    },
+    "azureblob_1_accountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the storage account the connector should use."
+      },
+      "defaultValue": "stproactivemeteringdev"
+    },
+    "azureblob_1_accessKey": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Specify a valid primary/secondary storage account access key."
+      }
+    },
+    "azureblob_1_authType": {
+      "type": "string",
+      "metadata": {
+        "description": "Authentication type to connect to your database"
+      },
+      "allowedValues": [
+        "basic",
+        "anonymous"
+      ]
+    },
+    "azureblob_1_privacySetting": {
+      "type": "string",
+      "metadata": {
+        "description": "Privacy Setting"
+      },
+      "allowedValues": [
+        "None",
+        "Private",
+        "Organizational",
+        "Public"
+      ]
+    },
+    "st-proactivemetering-logicapp-Test-custconnector3_1_Connection_Name": {
+      "type": "string",
+      "defaultValue": "st-proactivemetering-logicapp-Test-custconnector3"
+    },
+    "st-proactivemetering-logicapp-Test-custconnector3_1_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "st-proactivemeterig-gatewaytest"
+    },
+    "st-proactivemetering-logicapp-Test-custconnector3_1_authType": {
+      "type": "string",
+      "metadata": {
+        "description": "Authentication type to connect to your API"
+      },
+      "defaultValue": "anonymous",
+      "allowedValues": [
+        "none"
+      ]
+    },
+    "st-proactivemetering-logicapp-Test-custconnector3_1_gateway_id": {
+      "type": "string",
+      "defaultValue": "/subscriptions/39145e23-d044-41c8-a83d-4bab22cc8f5d/resourceGroups/st-proactivemetering-dev-neu-rg/providers/Microsoft.Web/connectionGateways/st-proactivemetering-neu-datagw"
+    },
+    "st-proactivemetering-logicapp-preprod-custconnector3_1_Connection_Name": {
+      "type": "string",
+      "defaultValue": "st-proactivemetering-logicapp-preprod-custconnector3"
+    },
+    "st-proactivemetering-logicapp-preprod-custconnector3_1_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "st-proactivemetering_test"
+    },
+    "st-proactivemetering-logicapp-preprod-custconnector3_1_authType": {
+      "type": "string",
+      "metadata": {
+        "description": "Authentication type to connect to your API"
+      },
+      "defaultValue": "anonymous",
+      "allowedValues": [
+        "none"
+      ]
+    },
+    "st-proactivemetering-logicapp-preprod-custconnector3_1_gateway_id": {
+      "type": "string",
+      "defaultValue": "/subscriptions/39145e23-d044-41c8-a83d-4bab22cc8f5d/resourceGroups/st-proactivemetering-dev-neu-rg/providers/Microsoft.Web/connectionGateways/st-proactivemetering-neu-datagw"
+    },
+    "keyvault_1_Connection_Name": {
+      "type": "string",
+      "defaultValue": "keyvault-1"
+    },
+    "keyvault_1_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "Harish.Ramaiah@severntrent.co.uk"
+    },
+    "keyvault_1_vaultName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the vault"
+      },
+      "defaultValue": "stproactivetestneukv"
+    },
+    "KarafSpecialConditionLogicAppConnector_1_Connection_Name": {
+      "type": "string",
+      "defaultValue": "KarafSpecialConditionLogicAppConnector-4"
+    },
+    "KarafSpecialConditionLogicAppConnector_1_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "st-proactivemeterig-gateway"
+    },
+    "KarafSpecialConditionLogicAppConnector_1_authType": {
+      "type": "string",
+      "metadata": {
+        "description": "Authentication type to connect to your API"
+      },
+      "defaultValue": "anonymous",
+      "allowedValues": [
+        "none"
+      ]
+    },
+    "KarafSpecialConditionLogicAppConnector_1_gateway_id": {
+      "type": "string",
+      "defaultValue": "/subscriptions/39145e23-d044-41c8-a83d-4bab22cc8f5d/resourceGroups/st-proactivemetering-dev-neu-rg/providers/Microsoft.Web/connectionGateways/st-proactivemetering-neu-datagw"
+    },
+    "sql_1_Connection_Name": {
+      "type": "string",
+      "defaultValue": "sql-1"
+    },
+    "sql_1_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "st-proactivemetering-dev-sqldb st-proactivemetering-dev-neu-sqlserver.database.windows.net"
+    },
+    "sql_1_server": {
+      "type": "string",
+      "metadata": {
+        "description": "SQL server name"
+      }
+    },
+    "sql_1_database": {
+      "type": "string",
+      "metadata": {
+        "description": "SQL database name"
+      }
+    },
+    "sql_1_username": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Username credential"
+      }
+    },
+    "sql_1_password": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password credential"
+      }
+    },
+    "sql_1_encryptConnection": {
+      "type": "bool",
+      "metadata": {
+        "description": "Encrypt Connection"
+      }
+    },
+    "sql_1_privacySetting": {
+      "type": "string",
+      "metadata": {
+        "description": "Privacy Setting"
+      },
+      "allowedValues": [
+        "None",
+        "Private",
+        "Organizational",
+        "Public"
+      ]
+    },
+    "sql_1_sqlConnectionString": {
+      "type": "securestring",
+      "metadata": {
+        "description": "SQL Connection String"
+      }
+    },
+    "sql_2_Connection_Name": {
+      "type": "string",
+      "defaultValue": "sql-2"
+    },
+    "sql_2_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "st-proactivemetering-dev-sqldb st-proactivemetering-dev-neu-sqlserver.database.windows.net"
+    },
+    "sql_2_server": {
+      "type": "string",
+      "metadata": {
+        "description": "SQL server name"
+      }
+    },
+    "sql_2_database": {
+      "type": "string",
+      "metadata": {
+        "description": "SQL database name"
+      }
+    },
+    "sql_2_username": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Username credential"
+      }
+    },
+    "sql_2_password": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password credential"
+      }
+    },
+    "sql_2_encryptConnection": {
+      "type": "bool",
+      "metadata": {
+        "description": "Encrypt Connection"
+      }
+    },
+    "sql_2_privacySetting": {
+      "type": "string",
+      "metadata": {
+        "description": "Privacy Setting"
+      },
+      "allowedValues": [
+        "None",
+        "Private",
+        "Organizational",
+        "Public"
+      ]
+    },
+    "sql_2_sqlConnectionString": {
+      "type": "securestring",
+      "metadata": {
+        "description": "SQL Connection String"
+      }
+    },
+    "LogicAppLocation": {
+      "type": "string",
+      "minLength": 1,
+      "allowedValues": [
+        "[resourceGroup().location]",
+        "eastasia",
+        "southeastasia",
+        "centralus",
+        "eastus",
+        "eastus2",
+        "westus",
+        "northcentralus",
+        "southcentralus",
+        "northeurope",
+        "westeurope",
+        "japanwest",
+        "japaneast",
+        "brazilsouth",
+        "australiaeast",
+        "australiasoutheast",
+        "southindia",
+        "centralindia",
+        "westindia",
+        "canadacentral",
+        "canadaeast",
+        "uksouth",
+        "ukwest",
+        "westcentralus",
+        "westus2",
+        "koreacentral",
+        "koreasouth",
+        "francecentral",
+        "francesouth",
+        "uaecentral",
+        "uaenorth",
+        "southafricanorth",
+        "southafricawest",
+        "switzerlandnorth",
+        "switzerlandwest",
+        "germanynorth",
+        "germanywestcentral",
+        "norwayeast",
+        "brazilsoutheast"
+      ],
+      "defaultValue": "northeurope"
+    },
+    "LogicAppName": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "st-proactivemetering-dev-neu-prefile01-la"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "actions": {
+            "Condition_2": {
+              "type": "If",
+              "expression": {
+                "and": [
+                  {
+                    "equals": [
+                      "@variables('Statuscode')",
+                      "@trim('200')"
+                    ]
+                  }
+                ]
+              },
+              "actions": {
+                "For_each": {
+                  "type": "Foreach",
+                  "foreach": "@body('Get_Requested_Jobs')?['resultsets']?['Table1']",
+                  "actions": {
+                    "Insert_Job_Created_on_Success": {
+                      "runAfter": {},
+                      "type": "ApiConnection",
+                      "inputs": {
+                        "body": {
+                          "FunctionalLocation": "@items('For_each')?['FunctionalLocation']",
+                          "Job_Created": "Y",
+                          "Job_Created_Date": "@{utcNow()}",
+                          "OrderNumber": "@body('Parse_JSON')?['WorkOrderId']",
+                          "PropertyID": "@items('For_each')?['PropertyID']"
+                        },
+                        "host": {
+                          "connection": {
+                            "name": "@parameters('$connections')['sql_1']['connectionId']"
+                          }
+                        },
+                        "method": "post",
+                        "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/tables/@{encodeURIComponent(encodeURIComponent('[dbo].[JOB_CREATED]'))}/items"
+                      }
+                    }
+                  },
+                  "runAfter": {
+                    "Parse_JSON": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "Parse_JSON": {
+                  "type": "ParseJson",
+                  "inputs": {
+                    "content": "@body('KarafLogicAppConnector')",
+                    "schema": {
+                      "properties": {
+                        "CodeGroup": {
+                          "type": "string"
+                        },
+                        "FlocId": {
+                          "type": "string"
+                        },
+                        "JobCode": {
+                          "type": "string"
+                        },
+                        "Notes": {
+                          "type": "string"
+                        },
+                        "NotificationContactName": {
+                          "type": "string"
+                        },
+                        "NotificationContactNumber": {
+                          "type": "string"
+                        },
+                        "NotificationType": {
+                          "type": "string"
+                        },
+                        "ServiceNotificationId": {
+                          "type": "string"
+                        },
+                        "Status": {
+                          "type": "string"
+                        },
+                        "TargetServiceOrder": {
+                          "type": "string"
+                        },
+                        "WorkOrderId": {
+                          "type": "string"
+                        },
+                        "WorkOrderType": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "runAfter": {}
+                }
+              },
+              "runAfter": {
+                "KarafLogicAppConnector": [
+                  "TimedOut"
+                ]
+              },
+              "else": {
+                "actions": {
+                  "For_each_2": {
+                    "type": "Foreach",
+                    "foreach": "@body('Get_Requested_Jobs')?['resultsets']?['Table1']",
+                    "actions": {
+                      "Insert_row_(V2)": {
+                        "runAfter": {},
+                        "type": "ApiConnection",
+                        "inputs": {
+                          "body": {
+                            "ErrorCode": "@body('Parse_JSON_for_Failure')?['code']",
+                            "FunctionalLocation": "@items('For_each_2')?['FunctionalLocation']",
+                            "Job_Created": "Y",
+                            "Job_Created_Date": "@{utcNow()}",
+                            "PropertyID": "@items('For_each_2')?['PropertyID']"
+                          },
+                          "host": {
+                            "connection": {
+                              "name": "@parameters('$connections')['sql']['connectionId']"
+                            }
+                          },
+                          "method": "post",
+                          "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/tables/@{encodeURIComponent(encodeURIComponent('[dbo].[JOB_CREATED]'))}/items"
+                        }
+                      }
+                    },
+                    "runAfter": {
+                      "Parse_JSON_for_Failure": [
+                        "Succeeded"
+                      ]
+                    }
+                  },
+                  "Parse_JSON_for_Failure": {
+                    "type": "ParseJson",
+                    "inputs": {
+                      "content": "@body('KarafLogicAppConnector')",
+                      "schema": {
+                        "properties": {
+                          "category": {
+                            "type": "string"
+                          },
+                          "code": {
+                            "type": "string"
+                          },
+                          "debugInfo": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "details": {
+                            "properties": {
+                              "Cause": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "runAfter": {}
+                  }
+                }
+              }
+            },
+            "Create_CSV_for_Preview_File": {
+              "type": "Table",
+              "inputs": {
+                "from": "@body('Get_Pre-File_data_')?['resultsets']?['Table1']",
+                "format": "CSV"
+              },
+              "runAfter": {
+                "Get_Pre-File_data_": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "For_each_4": {
+              "type": "Foreach",
+              "foreach": "@body('Get_Requested_Jobs')?['resultsets']?['Table1']",
+              "actions": {
+                "Set_variable": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "Property",
+                    "value": "@items('For_each_4')?['TargetPropertyID']"
+                  },
+                  "runAfter": {}
+                }
+              },
+              "runAfter": {
+                "VarRequest": [
+                  "TimedOut"
+                ]
+              }
+            },
+            "For_each_7": {
+              "type": "Foreach",
+              "foreach": "@body('Get_Requested_Jobs')?['resultsets']?['Table1']",
+              "actions": {
+                "Delay": {
+                  "type": "Wait",
+                  "inputs": {
+                    "interval": {
+                      "count": 20,
+                      "unit": "Second"
+                    }
+                  },
+                  "runAfter": {
+                    "KarafSpecialConditionLogicAppConnectors": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "KarafSpecialConditionLogicAppConnectors": {
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connection": {
+                        "name": "@parameters('$connections')['KarafSpecialConditionLogicAppConnector_1']['connectionId']"
+                      }
+                    },
+                    "method": "post",
+                    "headers": {
+                      "x-endpoint-shared-secret": "08697fcb-27fc-4182-a974-394ba955bdd7"
+                    },
+                    "path": "/cxf/specialconditions/property/end",
+                    "queries": {
+                      "specialCondition": "01PROMETER",
+                      "propertyNumber": "@items('For_each_7')?['OrderNumber']"
+                    }
+                  },
+                  "runAfter": {},
+                  "runtimeConfiguration": {
+                    "staticResult": {
+                      "staticResultOptions": "Enabled",
+                      "name": "KarafSpecialConditionLogicAppConnectors0"
+                    }
+                  }
+                }
+              },
+              "runAfter": {
+                "Initialize_variable": [
+                  "TimedOut"
+                ]
+              },
+              "runtimeConfiguration": {
+                "concurrency": {
+                  "repetitions": 1
+                }
+              }
+            },
+            "Get_Pre-File_data_": {
+              "runAfter": {
+                "filecontent_var": [
+                  "Succeeded"
+                ]
+              },
+              "type": "ApiConnection",
+              "inputs": {
+                "body": {
+                  "query": "select  I.[FunctionalLocation], I.[DMAID001] as DMA,I.[XYCoordinate] as GPS,I.[PostCode],I.[AddressName1] as AddressName,I.[Street],I.HouseNumber ,I.[SchemeCity],I.[SchemeDistrict] from [dbo].[PLAN_PREFILE_DETAILS_DESC] P Join [dbo].[INITIAL_DATA_LOAD] I ON P.PropertyID=I.TargetPropertyID WHERE P.PreFileId='@{triggerBody()?['PrefileID']}'"
+                },
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['sql']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/query/sql"
+              }
+            },
+            "Get_Requested_Jobs": {
+              "runAfter": {
+                "KarafAuthLogicAppPreprodConnector": [
+                  "TimedOut"
+                ]
+              },
+              "type": "ApiConnection",
+              "inputs": {
+                "body": {
+                  "query": "Select top 1000  R.* from [dbo].[JOB_REQUESTED] R \nWHERE R.Job_Requeated='Y'\nAND R.PropertyID not in \n (select C.PropertyID FROM [dbo].[JOB_CREATED] C) \n  AND R.FunctionalLocation not in\n  (select FunctionalLocation from INITIAL_DATA_LOAD WHERE ([RemovedFromPlan] = 'Y')) \n    ORDER BY Job_Requeated_Date\n"
+                },
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['sql']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/query/sql"
+              },
+              "runtimeConfiguration": {
+                "staticResult": {
+                  "staticResultOptions": "Enabled",
+                  "name": "Get_Requested_Jobs0"
+                }
+              }
+            },
+            "Get_secret": {
+              "runAfter": {},
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['keyvault']['connectionId']"
+                  }
+                },
+                "method": "get",
+                "path": "/secrets/@{encodeURIComponent('jobcode-creation')}/value"
+              }
+            },
+            "Initialize_variable": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "Property",
+                    "type": "integer"
+                  }
+                ]
+              },
+              "runAfter": {
+                "KarafSpecialConditionLogicAppTestConnectors": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Iterate_on_OperationStatus": {
+              "type": "Foreach",
+              "foreach": "@body('Get_Requested_Jobs')?['resultsets']?['Table1']",
+              "actions": {
+                "Condition": {
+                  "type": "If",
+                  "expression": {
+                    "or": [
+                      {
+                        "equals": [
+                          "@items('Iterate_on_OperationStatus')?['Operation_Status']",
+                          "SUNR"
+                        ]
+                      },
+                      {
+                        "equals": [
+                          "@items('Iterate_on_OperationStatus')?['Operation_Status']",
+                          "RJTD"
+                        ]
+                      }
+                    ]
+                  },
+                  "actions": {},
+                  "runAfter": {}
+                }
+              },
+              "runAfter": {
+                "For_each_7": [
+                  "TimedOut"
+                ]
+              }
+            },
+            "KarafAuthLogicAppPreprodConnector": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['st-proactivemetering-logicapp-preprod-custconnector3']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "body": {
+                  "codeGroup": "MEPRMI",
+                  "flocId": "1571544",
+                  "jobCode": "PIBD",
+                  "notificationType": "Z6",
+                  "propertyId": "636002344"
+                },
+                "headers": {
+                  "x-endpoint-shared-secret": "01a372ce-9ded-430d-a5fb-702f7196a252"
+                },
+                "path": "/cxf/job-booking/meter-jobs",
+                "retryPolicy": {
+                  "type": "none"
+                }
+              },
+              "runAfter": {
+                "Pre-File_Upload_Success_Response": [
+                  "TimedOut"
+                ]
+              }
+            },
+            "KarafLogicAppConnector": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['st-proactivemetering-logicapp-custconnector2_1']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "body": {
+                  "codeGroup": "MEPRMI",
+                  "flocId": "2386430",
+                  "jobCode": "PIBD",
+                  "notificationType": "Z6",
+                  "propertyId": "000000000000000000000598019168"
+                },
+                "headers": {
+                  "x-endpoint-shared-secret": "08697fcb-27fc-4182-a974-394ba955bdd7"
+                },
+                "path": "/cxf/job-booking/meter-jobs"
+              },
+              "runAfter": {
+                "KarafLogicAppConnectors": [
+                  "Failed"
+                ]
+              },
+              "runtimeConfiguration": {
+                "staticResult": {
+                  "staticResultOptions": "Enabled",
+                  "name": "KarafLogicAppConnector1"
+                }
+              }
+            },
+            "KarafLogicAppConnectors": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['st-proactivemetering-logicapp-Test-custconnector2']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "body": {
+                  "codeGroup": "MEPRMI",
+                  "flocId": "1571555",
+                  "jobCode": "PIBD",
+                  "notificationType": "Z6",
+                  "propertyId": "636002355"
+                },
+                "headers": {
+                  "x-endpoint-shared-secret": "08697fcb-27fc-4182-a974-394ba955bdd7"
+                },
+                "path": "/cxf/job-booking/meter-jobs"
+              },
+              "runAfter": {
+                "For_each_4": [
+                  "TimedOut"
+                ]
+              },
+              "runtimeConfiguration": {
+                "staticResult": {
+                  "staticResultOptions": "Enabled",
+                  "name": "KarafLogicAppConnectors0"
+                }
+              }
+            },
+            "KarafSpecialConditionLogicAppTestConnectors": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['st-proactivemetering-logicapp-Test-custconnector3']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "headers": {
+                  "x-endpoint-shared-secret": "08697fcb-27fc-4182-a974-394ba955bdd7"
+                },
+                "path": "/cxf/specialconditions/property/end",
+                "queries": {
+                  "specialCondition": "01PROMETER",
+                  "propertyNumber": "823281002"
+                }
+              },
+              "runAfter": {
+                "Get_Requested_Jobs": [
+                  "TimedOut"
+                ]
+              },
+              "runtimeConfiguration": {
+                "staticResult": {
+                  "staticResultOptions": "Enabled",
+                  "name": "KarafSpecialConditionLogicAppTestConnectors0"
+                }
+              }
+            },
+            "Pre-File_Upload_Fail_Response": {
+              "type": "Response",
+              "kind": "Http",
+              "inputs": {
+                "statusCode": 500,
+                "body": "Failed ."
+              },
+              "runAfter": {
+                "Upload_generated_File_(Create_blob)": [
+                  "Skipped",
+                  "TimedOut",
+                  "Failed"
+                ]
+              }
+            },
+            "Pre-File_Upload_Success_Response": {
+              "type": "Response",
+              "kind": "Http",
+              "inputs": {
+                "statusCode": 200,
+                "body": "Succeeded : Generated CSV File uploaded to Blob."
+              },
+              "runAfter": {
+                "Upload_generated_File_(Create_blob)": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Upload_generated_File_(Create_blob)": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['azureblob']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "body": "@body('Create_CSV_for_Preview_File')",
+                "path": "/datasets/default/files",
+                "queries": {
+                  "folderPath": "/st-proactive-preview-file",
+                  "name": "@triggerBody()?['name']",
+                  "queryParametersSingleEncoded": true
+                },
+                "retryPolicy": {
+                  "type": "none"
+                }
+              },
+              "runAfter": {
+                "Create_CSV_for_Preview_File": [
+                  "Succeeded"
+                ]
+              },
+              "runtimeConfiguration": {
+                "contentTransfer": {
+                  "transferMode": "Chunked"
+                }
+              }
+            },
+            "VarRequest": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "Statuscode",
+                    "type": "string"
+                  }
+                ]
+              },
+              "runAfter": {
+                "When_an_item_is_created_(V2)": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "When_an_item_is_created_(V2)": {
+              "runAfter": {
+                "Iterate_on_OperationStatus": [
+                  "TimedOut"
+                ]
+              },
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['sql']['connectionId']"
+                  }
+                },
+                "method": "get",
+                "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/tables/@{encodeURIComponent(encodeURIComponent('TRACK_JOB_PROGRESS'))}/onnewitems"
+              },
+              "runtimeConfiguration": {
+                "staticResult": {
+                  "staticResultOptions": "Enabled",
+                  "name": "When_an_item_is_created_(V2)0"
+                }
+              }
+            },
+            "filecontent_var": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "filecontent",
+                    "type": "string",
+                    "value": "[\n  {\n    \"@odata.etag\": \"\",\n    \"ItemInternalId\": \"64973206-012b-4075-ba97-aaa4f0d72b1d\",\n    \"Customer_updates_sent\": \"Yes\",\n    \"Customer_updates_FileName\": \"CustomerUpdatetoNP20201207122122.csv\",\n    \"OrderNumber\": \"5S67HXEJ6O3NO1ERIVLAGRZJ\",\n    \"Customer_updates_sent_date\": \"2020-12-07T12:21:22.3770000\"\n  }\n]"
+                  }
+                ]
+              },
+              "runAfter": {
+                "Get_secret": [
+                  "Succeeded"
+                ]
+              }
+            }
+          },
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            }
+          },
+          "triggers": {
+            "manual": {
+              "type": "Request",
+              "kind": "Http",
+              "inputs": {
+                "schema": {
+                  "properties": {
+                    "PrefileID": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "method": "POST",
+                "relativePath": "/api/{value}"
+              }
+            }
+          },
+          "contentVersion": "1.0.0.0",
+          "outputs": {},
+          "staticResults": {
+            "KarafSpecialConditionLogicAppConnectors0": {
+              "status": "Succeeded",
+              "outputs": {
+                "headers": {},
+                "statusCode": "OK"
+              }
+            },
+            "Get_Requested_Jobs0": {
+              "status": "Succeeded",
+              "outputs": {
+                "headers": {},
+                "statusCode": "OK"
+              }
+            },
+            "KarafLogicAppConnector1": {
+              "status": "Succeeded",
+              "outputs": {
+                "headers": {},
+                "statusCode": "OK"
+              }
+            },
+            "KarafLogicAppConnectors0": {
+              "status": "Succeeded",
+              "outputs": {
+                "headers": {},
+                "statusCode": "OK"
+              }
+            },
+            "KarafSpecialConditionLogicAppTestConnectors0": {
+              "status": "Succeeded",
+              "outputs": {
+                "headers": {},
+                "statusCode": "OK"
+              }
+            },
+            "When_an_item_is_created_(V2)0": {
+              "status": "Succeeded",
+              "outputs": {
+                "headers": {},
+                "statusCode": "OK"
+              }
+            }
+          }
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "sql_1": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'sql')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('sql_1_Connection_Name'))]",
+                "connectionName": "[parameters('sql_1_Connection_Name')]"
+              },
+              "sql": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'sql')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('sql_2_Connection_Name'))]",
+                "connectionName": "[parameters('sql_2_Connection_Name')]"
+              },
+              "KarafSpecialConditionLogicAppConnector_1": {
+                "id": "[resourceId('Microsoft.Web/customApis', 'KarafSpecialConditionLogicAppConnector')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('KarafSpecialConditionLogicAppConnector_1_Connection_Name'))]",
+                "connectionName": "[parameters('KarafSpecialConditionLogicAppConnector_1_Connection_Name')]"
+              },
+              "keyvault": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'keyvault')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('keyvault_1_Connection_Name'))]",
+                "connectionName": "[parameters('keyvault_1_Connection_Name')]"
+              },
+              "st-proactivemetering-logicapp-preprod-custconnector3": {
+                "id": "[resourceId('st-proactivemetering-preprod-neu-rg', 'Microsoft.Web/customApis', 'st-proactivemetering-logicapp-preprod-custconnector3')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('st-proactivemetering-logicapp-preprod-custconnector3_1_Connection_Name'))]",
+                "connectionName": "[parameters('st-proactivemetering-logicapp-preprod-custconnector3_1_Connection_Name')]"
+              },
+              "st-proactivemetering-logicapp-custconnector2_1": {
+                "id": "[resourceId('Microsoft.Web/customApis', 'st-proactivemetering-logicapp-custconnector2')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('st-proactivemetering-logicapp-custconnector2_1_Connection_Name'))]",
+                "connectionName": "[parameters('st-proactivemetering-logicapp-custconnector2_1_Connection_Name')]"
+              },
+              "st-proactivemetering-logicapp-Test-custconnector2": {
+                "id": "[resourceId('st-proactivemetering-test-neu-rg', 'Microsoft.Web/customApis', 'st-proactivemetering-logicapp-Test-custconnector2')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('st-proactivemetering-logicapp-Test-custconnector2_1_Connection_Name'))]",
+                "connectionName": "[parameters('st-proactivemetering-logicapp-Test-custconnector2_1_Connection_Name')]"
+              },
+              "st-proactivemetering-logicapp-Test-custconnector3": {
+                "id": "[resourceId('st-proactivemetering-test-neu-rg', 'Microsoft.Web/customApis', 'st-proactivemetering-logicapp-Test-custconnector3')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('st-proactivemetering-logicapp-Test-custconnector3_1_Connection_Name'))]",
+                "connectionName": "[parameters('st-proactivemetering-logicapp-Test-custconnector3_1_Connection_Name')]"
+              },
+              "azureblob": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'azureblob')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('azureblob_1_Connection_Name'))]",
+                "connectionName": "[parameters('azureblob_1_Connection_Name')]"
+              }
+            }
+          }
+        }
+      },
+      "name": "[parameters('LogicAppName')]",
+      "type": "Microsoft.Logic/workflows",
+      "location": "[parameters('LogicAppLocation')]",
+      "tags": {
+        "displayName": "LogicApp"
+      },
+      "apiVersion": "2016-06-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('sql_1_Connection_Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('sql_2_Connection_Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('KarafSpecialConditionLogicAppConnector_1_Connection_Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('keyvault_1_Connection_Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('st-proactivemetering-logicapp-preprod-custconnector3_1_Connection_Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('st-proactivemetering-logicapp-custconnector2_1_Connection_Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('st-proactivemetering-logicapp-Test-custconnector2_1_Connection_Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('st-proactivemetering-logicapp-Test-custconnector3_1_Connection_Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('azureblob_1_Connection_Name'))]"
+      ]
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('st-proactivemetering-logicapp-Test-custconnector2_1_Connection_Name')]",
+      "location": "northeurope",
+      "properties": {
+        "api": {
+          "id": "[resourceId('st-proactivemetering-test-neu-rg', 'Microsoft.Web/customApis', 'st-proactivemetering-logicapp-Test-custconnector2')]"
+        },
+        "displayName": "[parameters('st-proactivemetering-logicapp-Test-custconnector2_1_Connection_DisplayName')]",
+        "parameterValues": {
+          "authType": "[parameters('st-proactivemetering-logicapp-Test-custconnector2_1_authType')]",
+          "gateway": {
+            "id": "[parameters('st-proactivemetering-logicapp-Test-custconnector2_1_gateway_id')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('st-proactivemetering-logicapp-custconnector2_1_Connection_Name')]",
+      "location": "northeurope",
+      "properties": {
+        "api": {
+          "id": "[resourceId('Microsoft.Web/customApis', 'st-proactivemetering-logicapp-custconnector2')]"
+        },
+        "displayName": "[parameters('st-proactivemetering-logicapp-custconnector2_1_Connection_DisplayName')]",
+        "parameterValues": {
+          "authType": "[parameters('st-proactivemetering-logicapp-custconnector2_1_authType')]",
+          "gateway": {
+            "id": "[parameters('st-proactivemetering-logicapp-custconnector2_1_gateway_id')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('azureblob_1_Connection_Name')]",
+      "location": "northeurope",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'azureblob')]"
+        },
+        "displayName": "[parameters('azureblob_1_Connection_DisplayName')]",
+        "parameterValues": {
+          "accountName": "[parameters('azureblob_1_accountName')]",
+          "accessKey": "[parameters('azureblob_1_accessKey')]",
+          "authType": "[parameters('azureblob_1_authType')]",
+          "privacySetting": "[parameters('azureblob_1_privacySetting')]"
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('st-proactivemetering-logicapp-Test-custconnector3_1_Connection_Name')]",
+      "location": "northeurope",
+      "properties": {
+        "api": {
+          "id": "[resourceId('st-proactivemetering-test-neu-rg', 'Microsoft.Web/customApis', 'st-proactivemetering-logicapp-Test-custconnector3')]"
+        },
+        "displayName": "[parameters('st-proactivemetering-logicapp-Test-custconnector3_1_Connection_DisplayName')]",
+        "parameterValues": {
+          "authType": "[parameters('st-proactivemetering-logicapp-Test-custconnector3_1_authType')]",
+          "gateway": {
+            "id": "[parameters('st-proactivemetering-logicapp-Test-custconnector3_1_gateway_id')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('st-proactivemetering-logicapp-preprod-custconnector3_1_Connection_Name')]",
+      "location": "northeurope",
+      "properties": {
+        "api": {
+          "id": "[resourceId('st-proactivemetering-preprod-neu-rg', 'Microsoft.Web/customApis', 'st-proactivemetering-logicapp-preprod-custconnector3')]"
+        },
+        "displayName": "[parameters('st-proactivemetering-logicapp-preprod-custconnector3_1_Connection_DisplayName')]",
+        "parameterValues": {
+          "authType": "[parameters('st-proactivemetering-logicapp-preprod-custconnector3_1_authType')]",
+          "gateway": {
+            "id": "[parameters('st-proactivemetering-logicapp-preprod-custconnector3_1_gateway_id')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('keyvault_1_Connection_Name')]",
+      "location": "northeurope",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'keyvault')]"
+        },
+        "displayName": "[parameters('keyvault_1_Connection_DisplayName')]",
+        "nonSecretParameterValues": {
+          "vaultName": "[parameters('keyvault_1_vaultName')]"
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('KarafSpecialConditionLogicAppConnector_1_Connection_Name')]",
+      "location": "northeurope",
+      "properties": {
+        "api": {
+          "id": "[resourceId('Microsoft.Web/customApis', 'KarafSpecialConditionLogicAppConnector')]"
+        },
+        "displayName": "[parameters('KarafSpecialConditionLogicAppConnector_1_Connection_DisplayName')]",
+        "parameterValues": {
+          "authType": "[parameters('KarafSpecialConditionLogicAppConnector_1_authType')]",
+          "gateway": {
+            "id": "[parameters('KarafSpecialConditionLogicAppConnector_1_gateway_id')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('sql_1_Connection_Name')]",
+      "location": "northeurope",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'sql')]"
+        },
+        "displayName": "[parameters('sql_1_Connection_DisplayName')]",
+        "parameterValues": {
+          "server": "[parameters('sql_1_server')]",
+          "database": "[parameters('sql_1_database')]",
+          "username": "[parameters('sql_1_username')]",
+          "password": "[parameters('sql_1_password')]",
+          "encryptConnection": "[parameters('sql_1_encryptConnection')]",
+          "privacySetting": "[parameters('sql_1_privacySetting')]",
+          "sqlConnectionString": "[parameters('sql_1_sqlConnectionString')]"
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('sql_2_Connection_Name')]",
+      "location": "northeurope",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'sql')]"
+        },
+        "displayName": "[parameters('sql_2_Connection_DisplayName')]",
+        "parameterValues": {
+          "server": "[parameters('sql_2_server')]",
+          "database": "[parameters('sql_2_database')]",
+          "username": "[parameters('sql_2_username')]",
+          "password": "[parameters('sql_2_password')]",
+          "encryptConnection": "[parameters('sql_2_encryptConnection')]",
+          "privacySetting": "[parameters('sql_2_privacySetting')]",
+          "sqlConnectionString": "[parameters('sql_2_sqlConnectionString')]"
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}
